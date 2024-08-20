@@ -1,22 +1,19 @@
-# Используем официальный образ Python
 FROM python:3.9-slim
 
-# Устанавливаем рабочую директорию в контейнере
 WORKDIR /app
 
-# Устанавливаем зависимости, включая необходимые для Pygame
+# Устанавливаем зависимости
 RUN apt-get update && apt-get install -y \
     fontconfig \
     && rm -rf /var/lib/apt/lists/*
 
-# Копируем все файлы проекта в рабочую директорию контейнера
+# Копируем проект
 COPY . /app
 
-# Устанавливаем Python-зависимости
-RUN pip install --no-cache-dir pygame
+# Устанавливаем зависимости Python
+RUN pip install --no-cache-dir pygame Flask
 
-# Устанавливаем переменную окружения для запуска приложения
 ENV PYTHONUNBUFFERED=1
 
-# Запускаем приложение
-CMD ["python", "snake.py"]
+# Запускаем Flask
+CMD ["python", "app.py"]
